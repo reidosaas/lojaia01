@@ -1,0 +1,11 @@
+{
+  "vps": {
+    "ip": "157.180.116.110",
+    "user": "root",
+    "path": "/var/www/saas-loja"
+  },
+  "git": {
+    "repo": "COLE_A_URL_DO_SEU_REPOSITORIO_AQUI",
+    "branch": "main"
+  }
+}
