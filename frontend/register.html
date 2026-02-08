@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta - SaaS Loja WhatsApp</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo h1 {
+            font-size: 32px;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        .logo p {
+            color: #666;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+            outline: none;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: #666;
+            font-size: 12px;
+        }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            color: #999;
+            font-size: 14px;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        .plans {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        .plans h3 {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .plan-option {
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+            display: block;
+            position: relative;
+        }
+        .plan-option:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+        .plan-option.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        .plan-option input[type="radio"] {
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .plan-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 15px;
+        }
+        .plan-price {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .plan-features {
+            font-size: 12px;
+            color: #666;
+            margin-left: 28px;
+        }
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .hidden {
+            display: none;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .features-list {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        .features-list h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 14px;
+            color: #666;
+        }
+        .feature-item::before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="logo">
+                <h1>🛍️ Loja WhatsApp</h1>
+                <p>Crie sua loja virtual e venda pelo WhatsApp</p>
+            </div>
+
+            <div id="alertBox" class="hidden"></div>
+
+            <form id="registerForm" onsubmit="register(event)">
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" id="name" placeholder="Seu nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+                    <small>Será usado para login</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="password" placeholder="Mínimo 6 caracteres" required minlength="6">
+                </div>
+
+                <div class="form-group">
+                    <label>Confirmar Senha</label>
+                    <input type="password" id="confirmPassword" placeholder="Digite a senha novamente" required>
+                </div>
+
+                <div class="form-group">
+                    <label>WhatsApp (com código do país)</label>
+                    <input type="tel" id="whatsapp" placeholder="+5511999999999" required>
+                    <small>Exemplo: +5511999999999</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Chave Pix (opcional)</label>
+                    <input type="text" id="pixKey" placeholder="CPF, email, telefone ou chave aleatória">
+                    <small>Para receber pagamentos dos clientes</small>
+                </div>
+
+                <div class="plans">
+                    <h3>Escolha seu plano:</h3>
+                    <label class="plan-option selected">
+                        <div class="plan-header">
+                            <div>
+                                <input type="radio" name="plan" value="free" checked>
+                                <span class="plan-name">Free</span>
+                            </div>
+                            <span class="plan-price">Grátis</span>
+                        </div>
+                        <div class="plan-features">5 produtos • 50 pedidos/mês</div>
+                    </label>
+                    
+                    <label class="plan-option">
+                        <div class="plan-header">
+                            <div>
+                                <input type="radio" name="plan" value="basico">
+                                <span class="plan-name">Básico</span>
+                            </div>
+                            <span class="plan-price">R$ 29,90/mês</span>
+                        </div>
+                        <div class="plan-features">20 produtos • 200 pedidos/mês</div>
+                    </label>
+                    
+                    <label class="plan-option">
+                        <div class="plan-header">
+                            <div>
+                                <input type="radio" name="plan" value="pro">
+                                <span class="plan-name">Pro</span>
+                            </div>
+                            <span class="plan-price">R$ 79,90/mês</span>
+                        </div>
+                        <div class="plan-features">100 produtos • 1000 pedidos/mês</div>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn" id="submitBtn">
+                    Criar Minha Conta
+                </button>
+            </form>
+
+            <div class="divider">ou</div>
+
+            <div class="login-link">
+                Já tem uma conta? <a href="index.html">Fazer login</a>
+            </div>
+
+            <div class="features-list">
+                <h3>✨ O que você vai ter:</h3>
+                <div class="feature-item">Atendente virtual com IA</div>
+                <div class="feature-item">Vendas automáticas pelo WhatsApp</div>
+                <div class="feature-item">Dashboard completo</div>
+                <div class="feature-item">Gestão de produtos e pedidos</div>
+                <div class="feature-item">Sem mensalidade no plano Free</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        const API_URL = window.API_URL || (() => {
+            if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                return `${window.location.protocol}//${window.location.host}/api`;
+            }
+            return 'http://localhost:3000/api';
+        })();
+
+        // Selecionar plano visualmente
+        document.querySelectorAll('.plan-option').forEach(option => {
+            option.addEventListener('click', function(e) {
+                // Não fazer nada se clicou no radio button
+                if (e.target.type === 'radio') return;
+                
+                document.querySelectorAll('.plan-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                this.querySelector('input[type="radio"]').checked = true;
+            });
+        });
+
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.className = `alert alert-${type}`;
+            alertBox.textContent = message;
+            alertBox.classList.remove('hidden');
+            
+            setTimeout(() => {
+                alertBox.classList.add('hidden');
+            }, 5000);
+        }
+
+        async function register(event) {
+            event.preventDefault();
+            
+            console.log('Iniciando cadastro...');
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const whatsapp = document.getElementById('whatsapp').value.trim();
+            const pixKey = document.getElementById('pixKey').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+            
+            console.log('Dados:', { name, email, whatsapp });
+            
+            // Validações
+            if (!name || !email || !password || !whatsapp) {
+                showAlert('Por favor, preencha todos os campos obrigatórios!', 'error');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showAlert('As senhas não coincidem!', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showAlert('A senha deve ter no mínimo 6 caracteres!', 'error');
+                return;
+            }
+            
+            // Validar formato WhatsApp
+            if (!whatsapp.startsWith('+')) {
+                showAlert('WhatsApp deve começar com + e código do país (ex: +5511999999999)', 'error');
+                return;
+            }
+            
+            // Desabilitar botão e mostrar loading
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loading"></span> Criando conta...';
+            
+            try {
+                console.log('Enviando requisição...');
+                
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        password,
+                        whatsapp_number: whatsapp,
+                        pix_key: pixKey || null
+                    })
+                });
+                
+                console.log('Status:', response.status);
+                
+                const result = await response.json();
+                console.log('Resultado:', result);
+                
+                if (response.ok) {
+                    showAlert('✅ Conta criada com sucesso! Redirecionando...', 'success');
+                    
+                    // Salvar token
+                    localStorage.setItem('token', result.token);
+                    localStorage.setItem('user', JSON.stringify(result.user));
+                    
+                    // Redirecionar após 2 segundos
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                } else {
+                    showAlert(result.error || 'Erro ao criar conta. Tente novamente.', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Criar Minha Conta';
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                showAlert('Erro ao conectar com o servidor. Verifique se o servidor está rodando.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Criar Minha Conta';
+            }
+        }
+        
+        // Log para debug
+        console.log('Script carregado. API URL:', API_URL);
+    </script>
+</body>
+</html>
